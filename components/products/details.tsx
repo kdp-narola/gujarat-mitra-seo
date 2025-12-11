@@ -15,7 +15,7 @@ const ProductDetails = ({ product }: any) => {
   const dec = () => setQuantity((q) => (q > 1 ? q - 1 : 1));
 
   return (
-    <section className="min-h-screen py-10">
+    <section className="min-h-screen py-8">
       <div className="container mx-auto px-4">
         {/* Breadcrumb */}
         <div className="text-sm text-gray-600 mb-6 flex gap-2">

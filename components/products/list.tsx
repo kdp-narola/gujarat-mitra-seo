@@ -4,7 +4,7 @@ import Rating from "./rating";
 
 export default function ProductList({ products }: any) {
   return (
-    <section className="container mx-auto px-4 py-12">
+    <section className="container mx-auto px-4 py-8">
       {/* Breadcrumb */}
       <div className="text-sm text-gray-600 mb-8">
         <Link href="/" className="hover:text-purple-600">Home</Link>
