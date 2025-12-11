@@ -1,10 +1,7 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import { ShoppingBag, Sparkles, TrendingUp, Shield } from 'lucide-react';
+import Link from 'next/link';
 
 const Home = () => {
-  const router = useRouter();
 
   const features = [
     {
@@ -45,7 +42,23 @@ const Home = () => {
           </p>
 
           {/* CTA Button */}
-          <button
+          <Link
+            href="/products" 
+            className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+          >
+            <ShoppingBag className="w-5 h-5" />
+            <span>Browse Products</span>
+            <svg 
+              className="w-5 h-5 group-hover:translate-x-1 transition-transform" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Link>
+          
+          {/* <button
             onClick={() => router.push('/products')}
             className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
           >
@@ -59,7 +72,7 @@ const Home = () => {
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
-          </button>
+          </button> */}
         </div>
 
         {/* Features Grid */}

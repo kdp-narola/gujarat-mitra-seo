@@ -1,40 +1,39 @@
 import SeoJsonLd from "@/components/seoJsonLd";
-import { getProduct } from "@/lib/api";
-import dynamicComponent from "next/dynamic";
+import { getProduct, getProducts } from "@/lib/api";
+import dynamic from "next/dynamic";
+const ProductDetails = dynamic(() => import('@/components/products/details'));
 
-const ProductDetails = dynamicComponent(() => import("@/components/products/details"));
+export async function generateMetadata({params}: any) {
+  const { id } = await params;
+  const product = await getProduct(id);
 
-export const dynamic = "force-dynamic"; // force SSR at runtime
-export const revalidate = 0;            // avoid build API calls
-
-export async function generateMetadata({ params }: any) {
-  try {
-    const product = await getProduct(params.id);
-
-    return {
+  return {
+    title: product.title,
+    description: product.description,
+    alternates: {
+      canonical: `https://next-seo-demo.com/products/${product.id}`,
+    },
+    openGraph: {
       title: product.title,
       description: product.description,
-      alternates: {
-        canonical: `https://next-seo-demo.com/products/${product.id}`,
-      },
-      openGraph: {
-        title: product.title,
-        description: product.description,
-        images: [product.image],
-        url: `https://next-seo-demo.com/products/${product.id}`,
-        type: "website",
-      },
-    };
-  } catch (err) {
-    return {
-      title: "Product Not Found",
-      description: "This product does not exist.",
-    };
-  }
+      images: [product.image],
+      url: `https://next-seo-demo.com/products/${product.id}`,
+      type: "website",
+    },
+  };
 }
 
-export default async function ProductDetailPage({ params }: any) {
-  const product = await getProduct(params.id); // SSR runtime fetch
+export async function generateStaticParams() {
+  const products = await getProducts();
+
+  return products.map((p: any) => ({
+    id: p.id.toString(),
+  }));
+}
+
+export default async function ProductDetailPage({params}: any) {
+  const { id } = await params;
+  const product = await getProduct(id);
 
   return (
     <>
