@@ -10,7 +10,7 @@ export async function GET() {
     console.warn("⚠ Sitemap API fetch failed, using empty list.");
   }
 
-  const baseUrl = "https://next-seo-demo.com";
+  const baseUrl = "https://fakestoreapi.com";
 
   let xml = `
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
