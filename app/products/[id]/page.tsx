@@ -1,5 +1,5 @@
 import SeoJsonLd from "@/components/seoJsonLd";
-import { getProduct, getProducts } from "@/lib/api";
+import { getProduct } from "@/lib/api";
 import dynamic from "next/dynamic";
 const ProductDetails = dynamic(() => import('@/components/products/details'));
 
