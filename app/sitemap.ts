@@ -1,29 +1,17 @@
-import { MetadataRoute } from "next";
 import { getProducts } from "@/lib/api";
- 
-const BASE_URL = "http://localhost:3000";
- 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let products: any[] = [];
-  try {
-    products = await getProducts();
-  } catch (error) {
-    console.error("Failed to fetch products for sitemap:", error);
-  }
- 
-  const productUrls = products.map((product) => ({
-    url: `${BASE_URL}/products/${product.id}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.8,
+
+export default async function sitemap() {
+  const products = await getProducts();
+
+  const productUrls = products.map((p: any) => ({
+    url: `https://gujarat-mitra-seo.com/products/${p.id}`,
+    lastModified: new Date().toISOString(),
   }));
- 
+
   return [
     {
-      url: BASE_URL,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 1,
+      url: "https://gujarat-mitra-seo.com",
+      lastModified: new Date().toISOString(),
     },
     ...productUrls,
   ];
