@@ -23,14 +23,6 @@ export async function generateMetadata({params}: any) {
   };
 }
 
-export async function generateStaticParams() {
-  const products = await getProducts();
-
-  return products.map((p: any) => ({
-    id: p.id.toString(),
-  }));
-}
-
 export default async function ProductDetailPage({params}: any) {
   const { id } = await params;
   const product = await getProduct(id);
