@@ -1,31 +1,40 @@
 import SeoJsonLd from "@/components/seoJsonLd";
 import { getProduct } from "@/lib/api";
-import dynamic from "next/dynamic";
-const ProductDetails = dynamic(() => import('@/components/products/details'));
+import dynamicComponent from "next/dynamic";
 
-export async function generateMetadata({params}: any) {
-  const { id } = await params;
-  const product = await getProduct(id);
+const ProductDetails = dynamicComponent(() => import("@/components/products/details"));
 
-  return {
-    title: product.title,
-    description: product.description,
-    alternates: {
-      canonical: `https://next-seo-demo.com/products/${product.id}`,
-    },
-    openGraph: {
+export const dynamic = "force-dynamic"; // force SSR at runtime
+export const revalidate = 0;            // avoid build API calls
+
+export async function generateMetadata({ params }: any) {
+  try {
+    const product = await getProduct(params.id);
+
+    return {
       title: product.title,
       description: product.description,
-      images: [product.image],
-      url: `https://next-seo-demo.com/products/${product.id}`,
-      type: "website",
-    },
-  };
+      alternates: {
+        canonical: `https://next-seo-demo.com/products/${product.id}`,
+      },
+      openGraph: {
+        title: product.title,
+        description: product.description,
+        images: [product.image],
+        url: `https://next-seo-demo.com/products/${product.id}`,
+        type: "website",
+      },
+    };
+  } catch (err) {
+    return {
+      title: "Product Not Found",
+      description: "This product does not exist.",
+    };
+  }
 }
 
-export default async function ProductDetailPage({params}: any) {
-  const { id } = await params;
-  const product = await getProduct(id);
+export default async function ProductDetailPage({ params }: any) {
+  const product = await getProduct(params.id); // SSR runtime fetch
 
   return (
     <>

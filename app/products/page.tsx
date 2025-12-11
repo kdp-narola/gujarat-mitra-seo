@@ -6,10 +6,12 @@ export const metadata = {
   description: "Browse our complete product collection.",
 };
 
+// ❗ Prevent build-time API calls
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function ProductsPage() {
-  const products = await getProducts();
+  const products = await getProducts(); // runs at runtime, not build
 
   return (
     <div>
